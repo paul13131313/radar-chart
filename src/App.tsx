@@ -11,14 +11,10 @@ const DEFAULT_VALUES = [70, 60, 80, 50, 65, 75]
 export default function App() {
   const [labels, setLabels] = useState<string[]>(DEFAULT_LABELS)
   const [datasets, setDatasets] = useState<Dataset[]>([
-    { name: 'Data 1', values: DEFAULT_VALUES, color: '#3b82f6' },
+    { name: 'Data 1', values: DEFAULT_VALUES, color: '#CEFF00' },
   ])
   const [activeDataset, setActiveDataset] = useState(0)
-  const [darkMode, setDarkMode] = useState(false)
-
-  const bgColor = darkMode ? '#111111' : '#f5f0e8'
-  const textColor = darkMode ? '#ffffff' : '#000000'
-  const subColor = darkMode ? '#666666' : '#999999'
+  const [chartDarkMode, setChartDarkMode] = useState(true)
 
   const handlePresetSelect = useCallback((preset: PresetData) => {
     setLabels(preset.labels)
@@ -74,51 +70,50 @@ export default function App() {
   }, [datasets.length])
 
   return (
-    <div
-      className="min-h-screen transition-colors duration-300"
-      style={{ background: bgColor, color: textColor }}
-    >
+    <div className="min-h-screen bg-[#010101] text-[#F1F1F1]">
       {/* Header */}
-      <header className="px-6 pt-8 pb-4">
-        <div className="flex items-baseline justify-between">
-          <h1
-            className="text-2xl font-mono font-bold tracking-[0.2em]"
-            style={{ color: textColor }}
-          >
-            RADAR.CHART
-          </h1>
-          <span
-            className="text-[10px] font-mono tracking-widest"
-            style={{ color: subColor }}
-          >
-            MULTI-AXIS VISUALIZER
-          </span>
+      <header className="px-6 md:px-10 pt-8 pb-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-[-0.04em] leading-none">
+              RADAR
+              <span className="text-[#CEFF00]">.</span>
+              CHART
+            </h1>
+            <p className="text-[11px] tracking-[0.3em] text-[#666] mt-1 font-medium">
+              MULTI-AXIS VISUALIZER
+            </p>
+          </div>
+          <div className="text-[10px] tracking-[0.2em] text-[#444] font-medium">
+            #87
+          </div>
         </div>
-        <div className="mt-1 h-px" style={{ background: darkMode ? '#333' : '#ccc' }} />
+        <div className="mt-4 h-px bg-[#1a1a1a]" />
       </header>
 
       {/* Presets */}
-      <div className="px-6 py-3">
+      <div className="px-6 md:px-10 pb-4">
         <Presets onSelect={handlePresetSelect} />
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col lg:flex-row gap-6 px-6 pb-8">
-        {/* Chart */}
-        <div className="flex-1 flex flex-col items-center gap-4">
-          <RadarChart
-            labels={labels}
-            datasets={datasets}
-            darkMode={darkMode}
-          />
+      <div className="flex flex-col lg:flex-row gap-6 px-6 md:px-10 pb-10">
+        {/* Chart area */}
+        <div className="flex-1 flex flex-col items-center gap-5">
+          <div className="w-full max-w-[520px] bg-[#0a0a0a] rounded-[3px] p-4 border border-[#1a1a1a]">
+            <RadarChart
+              labels={labels}
+              datasets={datasets}
+              darkMode={chartDarkMode}
+            />
+          </div>
         </div>
 
-        {/* Controls */}
-        <div className="lg:w-[340px] flex flex-col gap-3">
+        {/* Controls panel */}
+        <div className="lg:w-[360px] flex flex-col gap-4">
           <DatasetTabs
             datasets={datasets}
             activeDataset={activeDataset}
-            darkMode={darkMode}
             onActiveChange={setActiveDataset}
             onAdd={handleAddDataset}
             onRemove={handleRemoveDataset}
@@ -127,20 +122,17 @@ export default function App() {
             labels={labels}
             datasets={datasets}
             activeDataset={activeDataset}
-            darkMode={darkMode}
+            chartDarkMode={chartDarkMode}
             onLabelsChange={setLabels}
             onDatasetChange={handleDatasetChange}
             onAxisCountChange={handleAxisCountChange}
-            onDarkModeChange={setDarkMode}
+            onChartDarkModeChange={setChartDarkMode}
           />
         </div>
       </div>
 
       {/* Footer */}
-      <footer
-        className="text-center py-4 text-[10px] font-mono tracking-widest"
-        style={{ color: subColor }}
-      >
+      <footer className="text-center py-6 text-[10px] tracking-[0.3em] text-[#333] font-medium border-t border-[#1a1a1a]">
         RADAR CHART MAKER — AI STUDIO PAUL
       </footer>
     </div>

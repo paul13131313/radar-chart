@@ -4,14 +4,15 @@ interface ControlsProps {
   labels: string[]
   datasets: Dataset[]
   activeDataset: number
-  darkMode: boolean
+  chartDarkMode: boolean
   onLabelsChange: (labels: string[]) => void
   onDatasetChange: (index: number, dataset: Dataset) => void
   onAxisCountChange: (count: number) => void
-  onDarkModeChange: (dark: boolean) => void
+  onChartDarkModeChange: (dark: boolean) => void
 }
 
 const COLOR_SWATCHES = [
+  '#CEFF00', // neon yellow (accent)
   '#ef4444', // red
   '#f97316', // orange
   '#eab308', // yellow
@@ -20,27 +21,21 @@ const COLOR_SWATCHES = [
   '#3b82f6', // blue
   '#8b5cf6', // purple
   '#ec4899', // pink
-  '#ffffff', // white
-  '#000000', // black
+  '#F1F1F1', // white
 ]
 
 export default function Controls({
   labels,
   datasets,
   activeDataset,
-  darkMode,
+  chartDarkMode,
   onLabelsChange,
   onDatasetChange,
   onAxisCountChange,
-  onDarkModeChange,
+  onChartDarkModeChange,
 }: ControlsProps) {
   const currentDataset = datasets[activeDataset]
   if (!currentDataset) return null
-
-  const textColor = darkMode ? '#fff' : '#000'
-  const borderColor = darkMode ? '#444' : '#ccc'
-  const inputBg = darkMode ? '#222' : '#fff'
-  const panelBg = darkMode ? '#1a1a1a' : '#fafafa'
 
   const handleLabelChange = (index: number, value: string) => {
     const newLabels = [...labels]
@@ -63,93 +58,95 @@ export default function Controls({
   }
 
   return (
-    <div
-      className="flex flex-col gap-4 p-4 font-mono text-xs"
-      style={{ background: panelBg, color: textColor }}
-    >
-      {/* Axis count */}
-      <div className="flex items-center gap-3">
-        <span className="tracking-widest text-[10px] opacity-60">AXES</span>
-        <button
-          onClick={() => onAxisCountChange(Math.max(3, labels.length - 1))}
-          className="w-7 h-7 border cursor-pointer flex items-center justify-center"
-          style={{ borderColor, background: inputBg, color: textColor }}
-        >
-          −
-        </button>
-        <span className="w-6 text-center text-sm">{labels.length}</span>
-        <button
-          onClick={() => onAxisCountChange(Math.min(8, labels.length + 1))}
-          className="w-7 h-7 border cursor-pointer flex items-center justify-center"
-          style={{ borderColor, background: inputBg, color: textColor }}
-        >
-          +
-        </button>
-      </div>
+    <div className="flex flex-col gap-5 p-5 bg-[#0a0a0a] border border-[#1a1a1a] rounded-[3px]">
 
-      {/* Background toggle */}
-      <div className="flex items-center gap-3">
-        <span className="tracking-widest text-[10px] opacity-60">BG</span>
-        <button
-          onClick={() => onDarkModeChange(false)}
-          className="w-7 h-7 border cursor-pointer"
-          style={{
-            background: '#fff',
-            borderColor: !darkMode ? '#000' : borderColor,
-            borderWidth: !darkMode ? 2 : 1,
-          }}
-        />
-        <button
-          onClick={() => onDarkModeChange(true)}
-          className="w-7 h-7 border cursor-pointer"
-          style={{
-            background: '#111',
-            borderColor: darkMode ? '#fff' : borderColor,
-            borderWidth: darkMode ? 2 : 1,
-          }}
-        />
-      </div>
+      {/* Section: Chart Settings */}
+      <div className="flex flex-col gap-3">
+        <span className="text-[10px] tracking-[0.3em] text-[#444] font-medium">CHART</span>
 
-      {/* Dataset name */}
-      <div className="flex items-center gap-3">
-        <span className="tracking-widest text-[10px] opacity-60">NAME</span>
-        <input
-          type="text"
-          value={currentDataset.name}
-          onChange={(e) => handleNameChange(e.target.value)}
-          className="flex-1 px-2 py-1 border font-mono text-xs outline-none"
-          style={{ borderColor, background: inputBg, color: textColor }}
-        />
-      </div>
-
-      {/* Color swatches */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className="tracking-widest text-[10px] opacity-60">COLOR</span>
-        {COLOR_SWATCHES.map((c) => (
+        {/* Axis count */}
+        <div className="flex items-center gap-3">
+          <span className="text-[11px] text-[#666] w-14">Axes</span>
           <button
-            key={c}
-            onClick={() => handleColorChange(c)}
-            className="w-6 h-6 border cursor-pointer rounded-none"
-            style={{
-              background: c,
-              borderColor: currentDataset.color === c ? textColor : borderColor,
-              borderWidth: currentDataset.color === c ? 2 : 1,
-            }}
+            onClick={() => onAxisCountChange(Math.max(3, labels.length - 1))}
+            className="w-7 h-7 border border-[#222] bg-transparent text-[#888] hover:text-[#CEFF00] hover:border-[#CEFF00] cursor-pointer flex items-center justify-center text-sm transition-all duration-200 rounded-[2px]"
+          >
+            −
+          </button>
+          <span className="w-6 text-center text-sm font-semibold text-[#F1F1F1]">{labels.length}</span>
+          <button
+            onClick={() => onAxisCountChange(Math.min(8, labels.length + 1))}
+            className="w-7 h-7 border border-[#222] bg-transparent text-[#888] hover:text-[#CEFF00] hover:border-[#CEFF00] cursor-pointer flex items-center justify-center text-sm transition-all duration-200 rounded-[2px]"
+          >
+            +
+          </button>
+        </div>
+
+        {/* Background toggle */}
+        <div className="flex items-center gap-3">
+          <span className="text-[11px] text-[#666] w-14">BG</span>
+          <button
+            onClick={() => onChartDarkModeChange(true)}
+            className={`w-7 h-7 bg-[#111] border rounded-[2px] cursor-pointer transition-all duration-200 ${
+              chartDarkMode ? 'border-[#CEFF00]' : 'border-[#333]'
+            }`}
           />
-        ))}
+          <button
+            onClick={() => onChartDarkModeChange(false)}
+            className={`w-7 h-7 bg-[#fff] border rounded-[2px] cursor-pointer transition-all duration-200 ${
+              !chartDarkMode ? 'border-[#CEFF00]' : 'border-[#333]'
+            }`}
+          />
+        </div>
       </div>
 
-      {/* Axis labels + values */}
-      <div className="flex flex-col gap-2 mt-2">
-        <span className="tracking-widest text-[10px] opacity-60">PARAMETERS</span>
+      <div className="h-px bg-[#1a1a1a]" />
+
+      {/* Section: Dataset */}
+      <div className="flex flex-col gap-3">
+        <span className="text-[10px] tracking-[0.3em] text-[#444] font-medium">DATASET</span>
+
+        {/* Dataset name */}
+        <div className="flex items-center gap-3">
+          <span className="text-[11px] text-[#666] w-14">Name</span>
+          <input
+            type="text"
+            value={currentDataset.name}
+            onChange={(e) => handleNameChange(e.target.value)}
+            className="flex-1 px-3 py-1.5 bg-[#111] border border-[#222] text-[#F1F1F1] text-[12px] outline-none focus:border-[#CEFF00] transition-colors rounded-[2px]"
+          />
+        </div>
+
+        {/* Color swatches */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-[11px] text-[#666] w-14">Color</span>
+          {COLOR_SWATCHES.map((c) => (
+            <button
+              key={c}
+              onClick={() => handleColorChange(c)}
+              className={`w-6 h-6 rounded-[2px] cursor-pointer transition-all duration-200 ${
+                currentDataset.color === c
+                  ? 'ring-1 ring-[#CEFF00] ring-offset-1 ring-offset-[#010101] scale-110'
+                  : 'border border-[#222] hover:scale-110'
+              }`}
+              style={{ background: c }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="h-px bg-[#1a1a1a]" />
+
+      {/* Section: Parameters */}
+      <div className="flex flex-col gap-2.5">
+        <span className="text-[10px] tracking-[0.3em] text-[#444] font-medium">PARAMETERS</span>
         {labels.map((label, i) => (
           <div key={i} className="flex items-center gap-2">
             <input
               type="text"
               value={label}
               onChange={(e) => handleLabelChange(i, e.target.value)}
-              className="w-24 px-2 py-1 border font-mono text-xs outline-none"
-              style={{ borderColor, background: inputBg, color: textColor }}
+              className="w-20 px-2 py-1 bg-[#111] border border-[#222] text-[#999] text-[11px] outline-none focus:border-[#CEFF00] focus:text-[#F1F1F1] transition-colors rounded-[2px]"
             />
             <input
               type="range"
@@ -157,8 +154,7 @@ export default function Controls({
               max={100}
               value={currentDataset.values[i] ?? 0}
               onChange={(e) => handleValueChange(i, Number(e.target.value))}
-              className="flex-1 h-1 accent-current"
-              style={{ accentColor: currentDataset.color }}
+              className="flex-1"
             />
             <input
               type="number"
@@ -166,8 +162,7 @@ export default function Controls({
               max={100}
               value={currentDataset.values[i] ?? 0}
               onChange={(e) => handleValueChange(i, Number(e.target.value))}
-              className="w-12 px-1 py-1 border font-mono text-xs text-center outline-none"
-              style={{ borderColor, background: inputBg, color: textColor }}
+              className="w-11 px-1 py-1 bg-[#111] border border-[#222] text-[#CEFF00] text-[11px] text-center font-semibold outline-none focus:border-[#CEFF00] transition-colors rounded-[2px]"
             />
           </div>
         ))}

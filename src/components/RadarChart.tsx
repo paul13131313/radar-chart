@@ -20,10 +20,10 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
   const axisCount = labels.length
   const levels = 5
 
-  const bgColor = darkMode ? '#111111' : '#ffffff'
-  const gridColor = darkMode ? '#333333' : '#e5e5e5'
-  const textColor = darkMode ? '#999999' : '#666666'
-  const titleColor = darkMode ? '#ffffff' : '#000000'
+  const bgColor = darkMode ? '#0a0a0a' : '#ffffff'
+  const gridColor = darkMode ? '#1f1f1f' : '#e5e5e5'
+  const textColor = darkMode ? '#555' : '#999'
+  const titleColor = darkMode ? '#F1F1F1' : '#010101'
 
   const getPoint = useCallback((index: number, value: number) => {
     const angle = (Math.PI * 2 * index) / axisCount - Math.PI / 2
@@ -43,7 +43,6 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
     }
   }, [axisCount, center, radius])
 
-  // Grid polygons
   const gridPolygons = Array.from({ length: levels }, (_, level) => {
     const levelValue = ((level + 1) / levels) * 100
     const points = Array.from({ length: axisCount }, (_, i) => {
@@ -53,13 +52,11 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
     return points
   })
 
-  // Axis lines
   const axisLines = Array.from({ length: axisCount }, (_, i) => {
     const p = getPoint(i, 100)
     return { x1: center, y1: center, x2: p.x, y2: p.y }
   })
 
-  // Dataset polygons
   const datasetPolygons = datasets.map((dataset) => {
     const points = Array.from({ length: axisCount }, (_, i) => {
       const val = dataset.values[i] ?? 0
@@ -116,7 +113,7 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
       <svg
         ref={svgRef}
         viewBox={`0 0 ${size} ${size}`}
-        className="w-full max-w-[500px]"
+        className="w-full"
         xmlns="http://www.w3.org/2000/svg"
       >
         <rect x="0" y="0" width={size} height={size} fill={bgColor} />
@@ -128,7 +125,7 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
             points={points}
             fill="none"
             stroke={gridColor}
-            strokeWidth={i === levels - 1 ? 1.5 : 0.8}
+            strokeWidth={i === levels - 1 ? 1.2 : 0.5}
           />
         ))}
 
@@ -141,7 +138,7 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
             x2={line.x2}
             y2={line.y2}
             stroke={gridColor}
-            strokeWidth={0.8}
+            strokeWidth={0.5}
           />
         ))}
 
@@ -151,11 +148,10 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
             <polygon
               points={dp.points}
               fill={dp.color}
-              fillOpacity={0.15}
+              fillOpacity={0.12}
               stroke={dp.color}
               strokeWidth={2}
             />
-            {/* Data points */}
             {Array.from({ length: axisCount }, (_, j) => {
               const val = datasets[i].values[j] ?? 0
               const p = getPoint(j, Math.min(100, Math.max(0, val)))
@@ -164,7 +160,7 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
                   key={`point-${i}-${j}`}
                   cx={p.x}
                   cy={p.y}
-                  r={3.5}
+                  r={3}
                   fill={dp.color}
                   stroke={bgColor}
                   strokeWidth={1.5}
@@ -191,7 +187,8 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
               dominantBaseline="central"
               fill={textColor}
               fontSize="11"
-              fontFamily="'Courier New', monospace"
+              fontFamily="'Inter', sans-serif"
+              fontWeight="500"
             >
               {label}
             </text>
@@ -204,17 +201,18 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
             <rect
               x={16}
               y={16 + i * 22}
-              width={12}
-              height={12}
+              width={10}
+              height={10}
               fill={ds.color}
-              rx={2}
+              rx={1}
             />
             <text
-              x={34}
-              y={24 + i * 22}
+              x={32}
+              y={22 + i * 22}
               fill={titleColor}
-              fontSize="11"
-              fontFamily="'Courier New', monospace"
+              fontSize="10"
+              fontFamily="'Inter', sans-serif"
+              fontWeight="500"
               dominantBaseline="central"
             >
               {ds.name}
@@ -223,26 +221,16 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
         ))}
       </svg>
 
-      <div className="flex gap-3">
+      <div className="flex gap-2">
         <button
           onClick={handleExportSVG}
-          className="px-5 py-2 text-xs font-mono tracking-widest border cursor-pointer transition-colors"
-          style={{
-            borderColor: darkMode ? '#444' : '#ccc',
-            color: darkMode ? '#fff' : '#000',
-            background: darkMode ? '#222' : '#f5f5f5',
-          }}
+          className="px-5 py-2 text-[10px] font-semibold tracking-[0.2em] border border-[#222] bg-transparent text-[#666] hover:text-[#CEFF00] hover:border-[#CEFF00] cursor-pointer transition-all duration-200 rounded-[2px]"
         >
           EXPORT SVG
         </button>
         <button
           onClick={handleExportPNG}
-          className="px-5 py-2 text-xs font-mono tracking-widest border cursor-pointer transition-colors"
-          style={{
-            borderColor: darkMode ? '#444' : '#ccc',
-            color: darkMode ? '#fff' : '#000',
-            background: darkMode ? '#222' : '#f5f5f5',
-          }}
+          className="px-5 py-2 text-[10px] font-semibold tracking-[0.2em] bg-[#CEFF00] text-[#010101] hover:bg-[#d4ff1a] cursor-pointer transition-all duration-200 rounded-[2px] border-none"
         >
           EXPORT PNG
         </button>

@@ -3,13 +3,12 @@ import type { Dataset } from './RadarChart'
 interface DatasetTabsProps {
   datasets: Dataset[]
   activeDataset: number
-  darkMode: boolean
   onActiveChange: (index: number) => void
   onAdd: () => void
   onRemove: (index: number) => void
 }
 
-const DEFAULT_COLORS = ['#3b82f6', '#ef4444', '#22c55e']
+const DEFAULT_COLORS = ['#CEFF00', '#ef4444', '#3b82f6']
 
 export function getDefaultColor(index: number): string {
   return DEFAULT_COLORS[index % DEFAULT_COLORS.length]
@@ -18,30 +17,24 @@ export function getDefaultColor(index: number): string {
 export default function DatasetTabs({
   datasets,
   activeDataset,
-  darkMode,
   onActiveChange,
   onAdd,
   onRemove,
 }: DatasetTabsProps) {
-  const textColor = darkMode ? '#fff' : '#000'
-  const borderColor = darkMode ? '#444' : '#ccc'
-  const activeBg = darkMode ? '#333' : '#e5e5e5'
-
   return (
-    <div className="flex items-center gap-1 font-mono text-xs">
+    <div className="flex items-center gap-1.5">
       {datasets.map((ds, i) => (
         <button
           key={i}
           onClick={() => onActiveChange(i)}
-          className="flex items-center gap-1 px-3 py-1.5 border cursor-pointer transition-colors"
-          style={{
-            borderColor,
-            background: activeDataset === i ? activeBg : 'transparent',
-            color: textColor,
-          }}
+          className={`flex items-center gap-1.5 px-3 py-2 text-[11px] font-medium tracking-wide border rounded-[2px] cursor-pointer transition-all duration-200 ${
+            activeDataset === i
+              ? 'border-[#CEFF00] bg-[#CEFF00]/10 text-[#F1F1F1]'
+              : 'border-[#222] bg-transparent text-[#666] hover:text-[#999]'
+          }`}
         >
           <span
-            className="w-2.5 h-2.5 inline-block rounded-full"
+            className="w-2 h-2 inline-block rounded-[1px]"
             style={{ background: ds.color }}
           />
           {ds.name || `Data ${i + 1}`}
@@ -51,7 +44,7 @@ export default function DatasetTabs({
                 e.stopPropagation()
                 onRemove(i)
               }}
-              className="ml-1 opacity-40 hover:opacity-100 cursor-pointer"
+              className="ml-1 text-[#444] hover:text-[#CEFF00] cursor-pointer transition-colors"
             >
               ×
             </span>
@@ -61,8 +54,7 @@ export default function DatasetTabs({
       {datasets.length < 3 && (
         <button
           onClick={onAdd}
-          className="px-3 py-1.5 border cursor-pointer transition-colors"
-          style={{ borderColor, color: textColor, background: 'transparent' }}
+          className="px-3 py-2 text-[11px] font-medium tracking-wide border border-dashed border-[#333] text-[#444] hover:text-[#CEFF00] hover:border-[#CEFF00] cursor-pointer transition-all duration-200 rounded-[2px]"
         >
           + ADD
         </button>
