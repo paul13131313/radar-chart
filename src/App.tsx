@@ -72,7 +72,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#010101] text-[#F1F1F1]">
       {/* Header */}
-      <header className="px-6 md:px-10 pt-10 pb-8">
+      <header className="px-6 md:px-10 pt-12 pb-10">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-[-0.04em] leading-none">
@@ -80,7 +80,7 @@ export default function App() {
               <span className="text-[#CEFF00]">.</span>
               CHART
             </h1>
-            <p className="text-[11px] tracking-[0.3em] text-[#666] mt-2 font-medium">
+            <p className="text-[11px] tracking-[0.3em] text-[#666] mt-4 font-medium">
               MULTI-AXIS VISUALIZER
             </p>
           </div>
@@ -88,11 +88,11 @@ export default function App() {
             #87
           </div>
         </div>
-        <div className="mt-6 h-px bg-[#1a1a1a]" />
+        <div className="mt-8 h-px bg-[#1a1a1a]" />
       </header>
 
       {/* Presets */}
-      <div className="px-6 md:px-10 pb-8">
+      <div className="px-6 md:px-10 pb-10">
         <Presets onSelect={handlePresetSelect} />
       </div>
 
