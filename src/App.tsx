@@ -72,7 +72,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#010101] text-[#F1F1F1]">
       {/* Header */}
-      <header className="px-6 md:px-10 pt-[60px] pb-[20px]">
+      <header className="max-w-[960px] mx-auto px-6 md:px-10 pt-[60px] pb-[20px]">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-[-0.04em] leading-none">
@@ -92,7 +92,7 @@ export default function App() {
       </header>
 
       {/* Presets */}
-      <div className="px-6 md:px-10 pt-[28px] pb-[48px]">
+      <div className="max-w-[960px] mx-auto px-6 md:px-10 pt-[28px] pb-[48px]">
         <Presets onSelect={handlePresetSelect} />
       </div>
 
