@@ -21,8 +21,8 @@ export default function RadarChart({ labels, datasets, darkMode }: RadarChartPro
   const levels = 5
 
   const bgColor = darkMode ? '#0a0a0a' : '#ffffff'
-  const gridColor = darkMode ? '#1f1f1f' : '#e5e5e5'
-  const textColor = darkMode ? '#555' : '#999'
+  const gridColor = darkMode ? '#333333' : '#d0d0d0'
+  const textColor = darkMode ? '#777' : '#888'
   const titleColor = darkMode ? '#F1F1F1' : '#010101'
 
   const getPoint = useCallback((index: number, value: number) => {
