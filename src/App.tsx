@@ -72,7 +72,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#010101] text-[#F1F1F1]">
       {/* Header */}
-      <header className="px-6 md:px-10 pt-8 pb-6">
+      <header className="px-6 md:px-10 pt-10 pb-8">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-[-0.04em] leading-none">
@@ -80,7 +80,7 @@ export default function App() {
               <span className="text-[#CEFF00]">.</span>
               CHART
             </h1>
-            <p className="text-[11px] tracking-[0.3em] text-[#666] mt-1 font-medium">
+            <p className="text-[11px] tracking-[0.3em] text-[#666] mt-2 font-medium">
               MULTI-AXIS VISUALIZER
             </p>
           </div>
@@ -88,19 +88,19 @@ export default function App() {
             #87
           </div>
         </div>
-        <div className="mt-4 h-px bg-[#1a1a1a]" />
+        <div className="mt-6 h-px bg-[#1a1a1a]" />
       </header>
 
       {/* Presets */}
-      <div className="px-6 md:px-10 pb-4">
+      <div className="px-6 md:px-10 pb-8">
         <Presets onSelect={handlePresetSelect} />
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col lg:flex-row gap-6 px-6 md:px-10 pb-10">
+      <div className="flex flex-col lg:flex-row gap-3 px-6 md:px-10 pb-12 max-w-[960px] mx-auto">
         {/* Chart area */}
         <div className="flex-1 flex flex-col items-center gap-5">
-          <div className="w-full max-w-[520px] bg-[#0a0a0a] rounded-[3px] p-4 border border-[#1a1a1a]">
+          <div className="w-full bg-[#0a0a0a] rounded-[3px] p-4 border border-[#1a1a1a]">
             <RadarChart
               labels={labels}
               datasets={datasets}
@@ -110,7 +110,7 @@ export default function App() {
         </div>
 
         {/* Controls panel */}
-        <div className="lg:w-[360px] flex flex-col gap-4">
+        <div className="lg:w-[340px] flex flex-col gap-4">
           <DatasetTabs
             datasets={datasets}
             activeDataset={activeDataset}
@@ -132,7 +132,7 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <footer className="text-center py-6 text-[10px] tracking-[0.3em] text-[#333] font-medium border-t border-[#1a1a1a]">
+      <footer className="text-center py-8 text-[10px] tracking-[0.3em] text-[#333] font-medium border-t border-[#1a1a1a]">
         RADAR CHART MAKER — AI STUDIO PAUL
       </footer>
     </div>
