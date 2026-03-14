@@ -97,7 +97,7 @@ export default function App() {
       </div>
 
       {/* Main content */}
-      <div className="flex flex-col lg:flex-row gap-3 px-6 md:px-10 pb-[80px] max-w-[960px] mx-auto">
+      <div className="flex flex-col lg:flex-row lg:items-end gap-3 px-6 md:px-10 pb-[80px] max-w-[960px] mx-auto">
         {/* Chart area */}
         <div className="flex-1 flex flex-col items-center gap-5">
           <div className="w-full bg-[#0a0a0a] rounded-[3px] p-4 border border-[#1a1a1a]">
@@ -110,7 +110,7 @@ export default function App() {
         </div>
 
         {/* Controls panel */}
-        <div className="lg:w-[340px] flex flex-col gap-4 lg:self-end">
+        <div className="lg:w-[340px] flex flex-col gap-4">
           <DatasetTabs
             datasets={datasets}
             activeDataset={activeDataset}
