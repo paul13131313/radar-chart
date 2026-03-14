@@ -118,13 +118,13 @@ export default function Controls({
         </div>
 
         {/* Color swatches */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[11px] text-[#666] w-14">Color</span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[11px] text-[#666] w-14 shrink-0">Color</span>
           {COLOR_SWATCHES.map((c) => (
             <button
               key={c}
               onClick={() => handleColorChange(c)}
-              className={`w-6 h-6 rounded-[2px] cursor-pointer transition-all duration-200 ${
+              className={`w-5 h-5 shrink-0 rounded-[2px] cursor-pointer transition-all duration-200 ${
                 currentDataset.color === c
                   ? 'ring-1 ring-[#CEFF00] ring-offset-1 ring-offset-[#010101] scale-110'
                   : 'border border-[#222] hover:scale-110'
