@@ -110,7 +110,7 @@ export default function App() {
         </div>
 
         {/* Controls panel */}
-        <div className="lg:w-[340px] flex flex-col gap-4">
+        <div className="lg:w-[340px] flex flex-col gap-4 lg:self-end">
           <DatasetTabs
             datasets={datasets}
             activeDataset={activeDataset}
